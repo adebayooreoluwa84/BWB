@@ -1,0 +1,5 @@
+Add your Aeonik Trial files in this folder, named:
+Aeonik-Regular-Trial.woff2 (or .otf)
+Aeonik-Medium-Trial.woff2 (or .otf)
+Aeonik-Bold-Trial.woff2 (or .otf)
+If your files are named differently, edit the three @font-face rules at the top of style.css.

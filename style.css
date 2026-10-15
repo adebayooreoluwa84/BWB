@@ -110,10 +110,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:14px;justify-content:space-between;
     background:var(--d);border-top:1px solid rgba(255,255,255,.08);
     flex-direction:column;align-items:stretch;gap:0;
     padding:8px 0 20px;
-    transform:translateY(-110%);transition:transform .35s cubic-bezier(.2,.7,.2,1);
+    transform:translateY(calc(-100% - 70px));
+    visibility:hidden;
+    pointer-events:none;
+    transition:transform .35s cubic-bezier(.2,.7,.2,1), visibility .35s;
     box-shadow:0 8px 32px rgba(0,0,0,.4);
   }
-  nav.open{transform:translateY(0)}
+  nav.open{
+    transform:translateY(0);
+    visibility:visible;
+    pointer-events:auto;
+  }
   nav a:not(.btn){display:block;padding:14px 22px;border-bottom:1px solid rgba(255,255,255,.06);font-size:17px}
   nav a:not(.btn):last-of-type{border-bottom:none}
   nav .btn.sm{display:block;margin:16px 22px 0;text-align:center;border-radius:999px}

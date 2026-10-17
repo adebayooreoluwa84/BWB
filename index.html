@@ -10,7 +10,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Accessibility In Tech | Build Without Barriers</title>
   <meta name="description"
-    content="Build Without Barriers, Session 1: Accessibility In Tech. A live conversation with Victoria Ottah, hosted by Stephanie Egbharevba. 30 October 2026, 3pm, on Google Meet.">
+    content="Build Without Barriers, Session 1: Accessibility In Tech. A live conversation with Victoria Ottah, hosted by Stephanie Egharevba. 30 October 2026, 3pm, on Google Meet.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Fallback font, used only until the Aeonik files are added to /fonts -->
@@ -51,7 +51,6 @@
             <div class="ctas">
               <a class="btn" href="https://luma.com/v3lnsw10">Save your spot</a>
               <!-- <a class="btn ghost" href="#theme">About the theme</a> -->
-              <span id="count" hidden></span>
             </div>
           </div>
           <img class="art" src="images/hero-art.jpg" width="910" height="600"
@@ -75,6 +74,36 @@
             <dt>Time</dt>
             <dd>4pm</dd>
           </div>
+          <div class="bar-countdown">
+            <dt>Starts in</dt>
+            <dd>
+              <div id="count" class="timer-card" role="timer" aria-label="Event countdown">
+                <div class="timer-unit">
+                  <div class="timer-digits" id="timer-days">
+                    <span class="timer-digit">0</span>
+                    <span class="timer-digit">0</span>
+                  </div>
+                  <span class="timer-label">days</span>
+                </div>
+                <span class="timer-sep" aria-hidden="true">:</span>
+                <div class="timer-unit">
+                  <div class="timer-digits" id="timer-hours">
+                    <span class="timer-digit">0</span>
+                    <span class="timer-digit">0</span>
+                  </div>
+                  <span class="timer-label">hours</span>
+                </div>
+                <span class="timer-sep" aria-hidden="true">:</span>
+                <div class="timer-unit">
+                  <div class="timer-digits" id="timer-mins">
+                    <span class="timer-digit">0</span>
+                    <span class="timer-digit">0</span>
+                  </div>
+                  <span class="timer-label">minutes</span>
+                </div>
+              </div>
+            </dd>
+          </div>
         </dl>
       </div>
     </div>
@@ -84,10 +113,14 @@
         <h2><span>Accessibility In Tech</span></h2>
         <p>Across Africa, many digital products and platforms leave people with disabilities out. Rarely is that on
           purpose. Accessibility simply was not part of the plan from the beginning.</p>
-        <p class="mut">Build Without Barriers is ZeroBarrier Advisory' monthly conversation with someone already
-          building more
-          inclusively, one sector at a time. We start with tech, because everything else is built on it. The goal is to
-          go beyond awareness, so you leave thinking, "this is something I can actually do."</p>
+        <p class="mut">Build Without Barriers is a monthly conversation exploring how we can make different industries
+          more inclusive, one sector at a time.
+          We’re starting with tech because so much of our everyday lives depends on digital products. From the apps we
+          use to the websites we visit, accessibility shapes who can use them and how easily they can do so.
+
+          Our goal is to move beyond awareness and explore practical ways to make various sectors work for more people.
+          You don’t have to be an accessibility expert to take part.
+          You just need to be curious about what can be done better.</p>
         <div class="grid">
           <div class="card">
             <h3>The problem</h3>
@@ -105,7 +138,7 @@
       </div>
     </section>
 
-    <section class="alt" id="agenda">
+    <!-- <section class="alt" id="agenda">
       <div class="wrap">
         <h2>How the hour <span>flows.</span></h2>
         <p class="mut">60 minutes, live on Google Meet, with live captions. The session is recorded and shared
@@ -129,7 +162,7 @@
           </li>
         </ol>
       </div>
-    </section>
+    </section> -->
 
     <section class="dark" id="people">
       <div class="wrap">
@@ -149,10 +182,10 @@
           </article>
           <article class="person yel">
             <img src="images/stephanie-egbharevba.jpg" width="500" height="550"
-              alt="Black and white portrait of Stephanie Egbharevba, smiling.">
+              alt="Black and white portrait of Stephanie Egharevba, smiling.">
             <div class="pbody">
               <span class="tag">Meet our host</span>
-              <h3>Stephanie Egbharevba</h3>
+              <h3>Stephanie Egharevba</h3>
               <p class="role">President, ZeroBarrier Advisory</p>
               <p>Stephanie hosts Build Without Barriers and leads the conversation with each guest, keeping it
                 practical, human and easy to follow.</p>
@@ -214,9 +247,49 @@
     })();
     /* Countdown */
     (function () {
-      var c = document.getElementById('count');
-      var d = Math.ceil((new Date(2026, 9, 31, 15) - new Date()) / 864e5);
-      if (d > 0) { c.textContent = d + (d === 1 ? ' day' : ' days') + ' to go'; c.hidden = false; }
+      var countEl = document.getElementById('count');
+      if (!countEl) return;
+
+      function renderDigits(id, str) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        if (el.children.length !== str.length) {
+          el.innerHTML = '';
+          for (var i = 0; i < str.length; i++) {
+            var span = document.createElement('span');
+            span.className = 'timer-digit';
+            span.textContent = str[i];
+            el.appendChild(span);
+          }
+        } else {
+          for (var j = 0; j < str.length; j++) {
+            if (el.children[j].textContent !== str[j]) {
+              el.children[j].textContent = str[j];
+            }
+          }
+        }
+      }
+
+      function update() {
+        var target = new Date(2026, 9, 31, 16, 0, 0).getTime();
+        var now = new Date().getTime();
+        var diff = Math.max(0, target - now);
+
+        var days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        var hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        var mins = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+
+        var dStr = String(days).padStart(2, '0');
+        var hStr = String(hours).padStart(2, '0');
+        var mStr = String(mins).padStart(2, '0');
+
+        renderDigits('timer-days', dStr);
+        renderDigits('timer-hours', hStr);
+        renderDigits('timer-mins', mStr);
+      }
+
+      update();
+      setInterval(update, 1000);
     })();
     /* Hamburger menu */
     (function () {

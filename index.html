@@ -8,9 +8,17 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="color-scheme" content="light dark">
   <title>Accessibility In Tech | Build Without Barriers</title>
   <meta name="description"
     content="Build Without Barriers, Session 1: Accessibility In Tech. A live conversation with Victoria Ottah, hosted by Stephanie Egharevba. 30 October 2026, 3pm, on Google Meet.">
+  <script>
+    (function () {
+      var saved = localStorage.getItem('bwb-theme');
+      var theme = saved || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      document.documentElement.setAttribute('data-theme', theme);
+    })();
+  </script>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <!-- Fallback font, used only until the Aeonik files are added to /fonts -->
@@ -32,6 +40,24 @@
       <nav aria-label="Main" id="main-nav">
         <a href="#theme">The theme</a>
         <a href="#people">Speaker &amp; host</a>
+        <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Toggle theme">
+          <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <circle cx="12" cy="12" r="5"></circle>
+            <line x1="12" y1="1" x2="12" y2="3"></line>
+            <line x1="12" y1="21" x2="12" y2="23"></line>
+            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+            <line x1="1" y1="12" x2="3" y2="12"></line>
+            <line x1="21" y1="12" x2="23" y2="12"></line>
+            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+          </svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"
+            stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
         <a class="btn sm" href="https://luma.com/v3lnsw10">Register</a>
       </nav>
     </div>
@@ -46,8 +72,11 @@
           <div>
             <span class="chip">Session 1 · Tech</span>
             <h1>Accessibility <span>In Tech</span></h1>
-            <p class="lead">Why does the sector building Africa's digital products still leave accessibility until last?
-              Join a live, practical conversation about what to do about it.</p>
+            <p class="lead">Why is accessibility still an afterthought in the making of Africa’s digital products? Join
+              us for a practical conversation on what needs to change and how we can build digital products that work
+              for everyone.
+
+            </p>
             <div class="ctas">
               <a class="btn" href="https://luma.com/v3lnsw10">Save your spot</a>
               <!-- <a class="btn ghost" href="#theme">About the theme</a> -->
@@ -72,7 +101,7 @@
           </div>
           <div>
             <dt>Time</dt>
-            <dd>4pm</dd>
+            <dd>4pm WAT</dd>
           </div>
           <div class="bar-countdown">
             <dt>Starts in</dt>
@@ -198,8 +227,9 @@
     <section>
       <div class="wrap">
         <h2>Who it's <span>for.</span></h2>
-        <p class="mut">You don't need to be an accessibility expert. If you build, design, manage or are preparing to
-          build digital products, this is for you.</p>
+        <p class="mut">You don’t need to be an accessibility expert to join. Whether you design, develop, manage, or are
+          preparing to create digital products, this conversation is for you. Join us to learn, share ideas,
+          and explore practical ways to make digital experiences more accessible to everyone.</p>
         <div class="who"><span>Developers</span><span>Designers</span><span>Product
             managers</span><span>Founders</span><span>Students</span><span>The curious</span></div>
         <p style="margin-top:26px"><strong>You'll leave with one thing you'll do differently.</strong></p>
@@ -209,7 +239,8 @@
     <section class="cta" id="register">
       <div class="wrap">
         <h2>Come build <span>without barriers.</span></h2>
-        <p>Oct. 31st · 4pm · Live on Google Meet. The registration link is coming soon. Questions in the meantime are
+        <p>Oct. 31st · 4pm WAT · Live on Google Meet. The registration link is coming soon. Questions in the meantime
+          are
           welcome.</p>
         <a class="btn"
           href="mailto:buildwithoutbarriers.hq@gmail.com?subject=Accessibility%20in%20Tech%20-%2030%20October">Get in
@@ -318,6 +349,25 @@
       }, { passive: true });
       btn.addEventListener('click', function () {
         window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    })();
+    /* Theme toggle */
+    (function () {
+      var btn = document.getElementById('theme-toggle');
+      if (!btn) return;
+      function getTheme() {
+        return document.documentElement.getAttribute('data-theme') || 'light';
+      }
+      function updateAria(theme) {
+        btn.setAttribute('aria-label', theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+      }
+      updateAria(getTheme());
+      btn.addEventListener('click', function () {
+        var current = getTheme();
+        var next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('bwb-theme', next);
+        updateAria(next);
       });
     })();
   </script>
